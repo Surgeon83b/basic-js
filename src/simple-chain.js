@@ -5,28 +5,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+  chain: [],
+
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.chain.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    if (!(arguments.length)) this.chain.push('()')
+    else if (value == null) this.chain.push('( null )');
+    else
+      this.chain.push('( ' + value.toString() + ' )');
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+      if ((isNaN(position)) || (!Number.isInteger(position)) || (position <= 0) || (position > this.chain.length)) throw ("You can\'t remove incorrect link!");
+      else {
+        this.chain.splice(position - 1, 1);
+        return this;
+      }
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.chain.reverse();
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let res = this.chain.join('~~');
+    this.chain = [];
+    return res;
   }
 };
 
+//chainMaker.addLink(1).addLink(2).addLink(3).removeLink(5);
+console.log(chainMaker.addLink('GHI').addLink(null).reverseChain().addLink(333).reverseChain().reverseChain().addLink(0).reverseChain().reverseChain().addLink('GHI').finishChain());
+//console.log(chainMaker.addLink(function () { }).addLink('2nd').addLink('3rd').removeLink(2).reverseChain().finishChain());
 module.exports = {
   chainMaker
 };
